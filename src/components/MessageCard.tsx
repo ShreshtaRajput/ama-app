@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Message } from "@/models/User";
 import { Card, CardContent, CardTitle, CardHeader } from "./ui/card";
 import {
@@ -31,11 +31,13 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
 
   const handleDeleteConfirm = async () => {
     try {
-      const response = await axios.delete(`/api/delete-message/${message._id}`);
+      const response = await axios.delete(
+        `/api/delete-message/${(message as any)._id}`
+      );
       toast({
         title: response.data.message,
       });
-      onMessageDelete(message._id);
+      onMessageDelete((message as any)._id);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
